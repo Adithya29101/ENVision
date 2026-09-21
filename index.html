@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APOCALYPTO — Official Cinematic Experience</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CORE CSS RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #050705;
+            --bg-card: rgba(14, 20, 14, 0.85);
+            --gold-primary: #e5c158;
+            --gold-glow: rgba(229, 193, 88, 0.35);
+            --crimson: #8b1515;
+            --text-main: #f5f7f5;
+            --text-sub: #a0ada0;
+            --font-head: 'Cinzel', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- PARTICLES & AMBIENT GLOW --- */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-top { top: -100px; left: -100px; width: 500px; height: 500px; background: #e5c158; }
+        .glow-bottom { bottom: -100px; right: -100px; width: 600px; height: 600px; background: #8b1515; }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 80px;
+            background: rgba(5, 7, 5, 0.92);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(229, 193, 88, 0.25);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: var(--text-main);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--gold-primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--gold-primary);
+            background: rgba(229, 193, 88, 0.12);
+            border: 1px solid rgba(229, 193, 88, 0.3);
+        }
+
+        /* --- CONTAINER & PAGES --- */
+        main {
+            flex: 1;
+            margin-top: 85px;
+            z-index: 2;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            padding: 60px 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+        }
+
+        .page-header p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .divider {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            margin: 20px auto 0;
+        }
+
+        /* --- HOME HERO MOVIE SCENE SPLIT LAYOUT --- */
+        #home {
+            padding: 0;
+            max-width: 100%;
+        }
+
+        .hero-container {
+            position: relative;
+            min-height: calc(100vh - 85px);
+            display: flex;
+            align-items: center;
+            padding: 60px 80px;
+            background: linear-gradient(180deg, rgba(5,7,5,0.45) 0%, rgba(5,7,5,0.65) 100%),
+           url('https://i.pinimg.com/736x/5a/88/a8/5a88a800ded480c74d0b7ece0fd3955a.jpg');
+            border-bottom: 1px solid rgba(229, 193, 88, 0.3);
+        }
+
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-content {
+            background: rgba(5, 7, 5, 0.75);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(229, 193, 88, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .badge {
+            background: rgba(229, 193, 88, 0.15);
+            color: var(--gold-primary);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--gold-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            line-height: 1.25;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .hero-content p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+
+        /* HERO SIDE PHOTO CARD */
+        .hero-side-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 30px rgba(229, 193, 88, 0.15);
+            height: 520px;
+        }
+
+        .hero-side-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-side-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .side-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(180deg, transparent 0%, rgba(5,7,5,0.9) 100%);
+            color: var(--gold-primary);
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(229, 193, 88, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(229, 193, 88, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid rgba(229, 193, 88, 0.4);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+            background: rgba(229, 193, 88, 0.1);
+        }
+
+        /* --- GRID LAYOUTS & STANDARD CARDS --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid rgba(229, 193, 88, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7), 0 0 20px rgba(229, 193, 88, 0.15);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 40%, rgba(14, 20, 14, 0.95) 100%);
+        }
+
+        .card-body {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .card p {
+            color: var(--text-sub);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .card-tag {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+        }
+
+        /* --- COMPACT SMALL CHARACTER CARDS GRID --- */
+        .grid-characters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .character-card-small {
+            background: rgba(14, 20, 14, 0.9);
+            border: 1px solid rgba(229, 193, 88, 0.25);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .character-card-small:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8), 0 0 15px rgba(229, 193, 88, 0.2);
+        }
+
+        .char-img-small {
+            width: 85px;
+            height: 85px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            flex-shrink: 0;
+        }
+
+        .char-info {
+            flex: 1;
+        }
+
+        .char-info h3 {
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .char-role {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .char-desc {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 35px;
+            border-top: 1px solid rgba(229, 193, 88, 0.2);
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            background: #030403;
+            z-index: 2;
+            margin-top: 60px;
+        }
+
+        /* --- RESPONSIVE STYLES --- */
+        @media (max-width: 1024px) {
+            .hero-split { grid-template-columns: 1fr; }
+            .hero-side-card { height: 380px; }
+            .hero-container { padding: 40px 30px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 18px 25px; }
+            .page { padding: 40px 20px; }
+            nav ul { gap: 8px; }
+            nav a { padding: 6px 10px; font-size: 0.75rem; }
+            .hero-content { padding: 30px 20px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .grid-characters { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACKGROUND PARTICLES & LIGHT GLOW -->
+    <canvas id="particles"></canvas>
+    <div class="ambient-glow glow-top"></div>
+    <div class="ambient-glow glow-bottom"></div>
+
+    <!-- HEADER NAVIGATION -->
+    <header>
+        <div class="logo" onclick="navigateTo('home')">APOCALY<span>PTO</span></div>
+        <nav>
+            <ul>
+                <li><a class="nav-link active" onclick="navigateTo('home', this)">Home</a></li>
+                <li><a class="nav-link" onclick="navigateTo('story', this)">Story</a></li>
+                <li><a class="nav-link" onclick="navigateTo('themes', this)">Themes</a></li>
+                <li><a class="nav-link" onclick="navigateTo('characters', this)">Characters</a></li>
+                <li><a class="nav-link" onclick="navigateTo('production', this)">Production</a></li>
+                <li><a class="nav-link" onclick="navigateTo('acclaim', this)">Acclaim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main>
+
+        <!-- PAGE 1: HOME (SPLIT LAYOUT WITH SIDE MOVIE SCENE PHOTO) -->
+        <div id="home" class="page active">
+            <div class="hero-container">
+                <div class="hero-split">
+                    <!-- LEFT COLUMN: TEXT & BUTTONS -->
+                    <div class="hero-content">
+                        <div class="badge"><i class="fa-solid fa-fire-flame-curved"></i> Mel Gibson's Epic Film</div>
+                        <h1>A GREAT CIVILIZATION IS NOT CONQUERED FROM WITHOUT UNTIL IT HAS DESTROYED ITSELF FROM WITHIN</h1>
+                        <p>Set in the final days of the ancient Maya empire, Apocalypto delivers a gripping cinematic journey of survival, endurance, and courage through the Mesoamerican rainforest.</p>
+                        <div class="btn-group">
+                            <a href="https://www.youtube.com/watch?v=ngWB3dKiLJA" target="_blank" class="btn btn-primary"><i class="fa-solid fa-play"></i> Watch Trailer</a>
+                            <button class="btn btn-secondary" onclick="navigateTo('story')"><i class="fa-solid fa-book-open"></i> Explore Narrative</button>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: SIDE MOVIE SCENE PHOTO -->
+                    <div class="hero-side-card">
+                        <img id="sideHeroImage" src="https://i.pinimg.com/1200x/74/65/d2/7465d2bf7aa8b456f73fd146d2784fb0.jpg" alt="Apocalypto Movie Scene">
+                        <div class="side-card-overlay">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: STORY MOVIE SCENES -->
+        <div id="story" class="page">
+            <div class="page-header">
+                <h1>The Narrative</h1>
+                <p>Key dramatic acts capturing Jaguar Paw's desperate race against time</p>
+                <div class="divider"></div>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/1200x/fd/14/97/fd1497c48c3a8fd622fa97f66d015314.jpg" alt="The Rainforest Village">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-campground"></i></div>
+                        <h3>The Village Raid</h3>
+                        <p>A tranquil forest community is shattered when raiding warriors attack, capturing villagers for tribute to the empire.</p>
+                        <span class="card-tag">Chapter I — Chaos</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/1200x/99/a5/0f/99a50f07dbebfdb55b930aa83f96993e.jpg" alt="Ancient Sun Pyramid Scene">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-monument"></i></div>
+                        <h3>The Temple Sacrifice</h3>
+                        <p>Captives are marched to the grand stone pyramids, where high priests conduct solemn rituals during a sudden solar eclipse.</p>
+                        <span class="card-tag">Chapter II — Ritual</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/1200x/48/50/3f/48503f964a66dbe48094b0b1ef9023ad.jpg" alt="Jungle Chase Scene">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-person-running"></i></div>
+                        <h3>The Rainforest Chase</h3>
+                        <p>Breaking free from captivity, Jaguar Paw uses his intimate mastery of the jungle to evade pursuers across treacherous terrain.</p>
+                        <span class="card-tag">Chapter III — Pursuit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: THEMES -->
+        <div id="themes" class="page">
+            <div class="page-header">
+                <h1>Cinematic Themes</h1>
+                <p>The philosophical and historical underpinnings of the story</p>
+                <div class="divider"></div>
+            </div>
+            <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/1200x/f2/85/4e/f2854e5b23c4a3dc4a82711b71a359c1.jpg" alt="Deep Jungle Scene">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-heart"></i></div>
+                        <h3>Love & Protection</h3>
+                        <p>Driven by unwavering devotion, Jaguar Paw overcomes extraordinary hazards to return and rescue his trapped family.
+                            Illustrates how political corruption, environmental exhaustion, and fear undermine societies from within long before external invasion.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: CHARACTERS (SMALLER COMPACT CARDS & EXPANDED CAST) -->
+        <div id="characters" class="page">
+            <div class="page-header">
+                <h1>Key Characters</h1>
+                <p>Prominent figures from the village tribe and Mayan warlords</p>
+                <div class="divider"></div>
+            </div>
+            <div class="grid-characters">
+                <!-- CARD 1 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop" alt="Jaguar Paw">
+                    <div class="char-info">
+                        <h3>Jaguar Paw</h3>
+                        <span class="char-role">Protagonist / Hunter</span>
+                        <p class="char-desc">Young village hunter who uses his deep knowledge of the jungle to battle for survival.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" alt="Zero Wolf">
+                    <div class="char-info">
+                        <h3>Zero Wolf</h3>
+                        <span class="char-role">Antagonist / Warlord</span>
+                        <p class="char-desc">Relentless Holcane commander leading the search party across treacherous terrain.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" alt="Seven">
+                    <div class="char-info">
+                        <h3>Seven</h3>
+                        <span class="char-role">Jaguar Paw's Wife</span>
+                        <p class="char-desc">Devoted wife hidden safely inside a deep cenote pit with her young son during the raid.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=300&auto=format&fit=crop" alt="Middle Eye">
+                    <div class="char-info">
+                        <h3>Middle Eye</h3>
+                        <span class="char-role">Raider Warrior</span>
+                        <p class="char-desc">Cruel and ruthless raider who holds a bitter personal grudge against Jaguar Paw.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 5 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=300&auto=format&fit=crop" alt="Flint Sky">
+                    <div class="char-info">
+                        <h3>Flint Sky</h3>
+                        <span class="char-role">Tribal Leader</span>
+                        <p class="char-desc">Jaguar Paw's wise father who imparts key lessons on overcoming fear in the wild.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 6 -->
+                <div class="character-card-small">
+                    <img class="char-img-small" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300&auto=format&fit=crop" alt="Blunted">
+                    <div class="char-info">
+                        <h3>Blunted</h3>
+                        <span class="char-role">Tribal Warrior</span>
+                        <p class="char-desc">Loyal fellow hunter from Jaguar Paw's tribe who fights bravely to protect his family.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: PRODUCTION -->
+        <div id="production" class="page">
+            <div class="page-header">
+                <h1>Behind The Scenes</h1>
+                <p>Authentic craftsmanship, location shooting, and language preservation</p>
+                <div class="divider"></div>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/bf/e7/9e/bfe79ea9ab27119b69c15d711fdb3570.jpg" alt="Jungle Location Scene">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-tree"></i></div>
+                        <h3>Veracruz Rainforests</h3>
+                        <p>Filmed extensively in the Catemaco rainforests of Mexico, utilizing authentic natural settings for realism.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/39/29/03/392903c32a59787774d432038b6764de.jpg" alt="Script and Language">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-language"></i></div>
+                        <h3>Yucatec Maya Dialogue</h3>
+                        <p>Spoken completely in Yucatec Maya to provide complete historical immersion and cultural resonance.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/05/30/ec/0530eca087264cf83594e52c2dde8922.jpg" alt="Indigenous Ensemble">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                        <h3>Indigenous Cast</h3>
+                        <p>Features an ensemble cast composed almost entirely of Native American and Indigenous Mexican actors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 6: ACCLAIM -->
+        <div id="acclaim" class="page">
+            <div class="page-header">
+                <h1>Critical Acclaim</h1>
+                <p>Recognition for visual power, sound design, and narrative pace</p>
+                <div class="divider"></div>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-quote-left"></i></div>
+                        <h3>Roger Ebert</h3>
+                        <p>"A film of relentless momentum and visual energy, capturing intense raw survival."</p>
+                        <span class="card-tag">Chicago Sun-Times</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-quote-left"></i></div>
+                        <h3>Quentin Tarantino</h3>
+                        <p>"A masterpiece in action choreography and pure cinematic visual storytelling."</p>
+                        <span class="card-tag">Featured Commentary</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon"><i class="fa-solid fa-award"></i></div>
+                        <h3>Academy Awards</h3>
+                        <p>Honored with 3 Oscar nominations including Best Sound Editing, Best Sound Mixing, and Best Makeup.</p>
+                        <span class="card-tag">79th Academy Awards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 APOCALYPTO Cinematic Experience. Built for Showcase Purposes.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // PAGE NAVIGATION LOGIC
+        function navigateTo(pageId, element) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) targetPage.classList.add('active');
+
+            if (element) {
+                element.classList.add('active');
+            } else {
+                const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+                const match = navLinks.find(link => link.getAttribute('onclick')?.includes(`'${pageId}'`));
+                if (match) match.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // AMBIENT BACKGROUND PARTICLES
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = -Math.random() * 0.4 - 0.1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < 0) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(229, 193, 88, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
